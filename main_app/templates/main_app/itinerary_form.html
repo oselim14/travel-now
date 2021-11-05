@@ -16,4 +16,23 @@
   <input type="submit" value="Submit!" class="btn">
 </form>
 
+<script>
+
+  const dateEl = document.getElementById('id_arrival_date');
+  const depDateEl = document.getElementById('id_departure_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+  M.Datepicker.init(depDateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+</script>
+
 {% endblock %}

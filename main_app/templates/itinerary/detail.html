@@ -7,7 +7,8 @@
   <div class="col s6">
     <div class="card">
       <div class="card-content">
-        <h1>Itinerary</h1>
+        <h1 class='center'>{{ itinerary.city }}</h1>
+        <h4 class='center'>{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
       </div>
       <div class="card-action">
         <a href="{% url 'itinerary_update' itinerary.id %}">Edit</a>
@@ -67,5 +68,20 @@
   </div>
 
 </div>
+
+<script>
+
+  const dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+  const selectEl = document.getElementById('id_meal');
+  M.FormSelect.init(selectEl);
+
+</script>
 
 {% endblock %}

@@ -35,6 +35,10 @@ class ItineraryCreate(CreateView):
     model = Itinerary
     fields = ['city', 'description', 'arrival_date', 'departure_date']
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 class ItineraryUpdate(UpdateView):
     model = Itinerary
     fields = ['description', 'city', 'arrival_date', 'departure_date']
