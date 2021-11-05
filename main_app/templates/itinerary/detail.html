@@ -1,6 +1,71 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Itinerary Detail</h1>
+<h1>Itinerary Details</h1>
+
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <h1>Itinerary</h1>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'itinerary_update' itinerary.id %}">Edit</a>
+        <a href="{% url 'itinerary_delete' itinerary.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>Added Locations</h3>
+    {% if itinerary.locations.count %}
+      {% for location in itinerary.locations.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <p>name: {{ location.name }}</p>
+              <p>website: {{location.website}}</p>
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'remove_location' itinerary.id location.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>No Locations Added</h5>
+    {% endif %}
+  </div>
+
+  <div class="col s6">
+    <h3>Available Locations</h3>
+    {% if locations.count %}
+      {% for location in locations.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <p>name: {{ location.name }}</p>
+              <p>website: {{location.website}}</p>
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'add_location' itinerary.id location.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>Already Has All Locations Available</h5>
+    {% endif %}
+  </div>
+
+</div>
 
 {% endblock %}

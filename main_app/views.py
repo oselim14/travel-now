@@ -15,7 +15,7 @@ from .forms import LocationForm
 # Create your views here.
 
 def home(request):
-    return HttpResponse('<h1>home</h1>')
+    return render(request, 'home.html')
 
 def about(request):
     return render(request, 'about.html')
@@ -26,14 +26,31 @@ def itinerary_index(request):
 
 def itinerary_detail(request, itinerary_id):
     itinerary = Itinerary.objects.get(id=itinerary_id)
-    return render(request, 'itinerary/detail.html', { 'itinerary': itinerary })
+    locations_exclude = Location.objects.exclude(id__in=itinerary.locations.all().values_list('id'))
+
+    return render(request, 'itinerary/detail.html', {
+        'itinerary': itinerary,
+        'locations': locations_exclude
+    })
 
 def itinerary_create(request):
     Itinerary.objects.create()
     return redirect('index')
 
+class ItineraryUpdate(UpdateView):
+    model = Itinerary
+    fields = ['description', 'city', 'arrival_date', 'departure_date']
+
+class ItineraryDelete(DeleteView):
+    model = Itinerary
+    success_url = '/itinerary/'
+
 def add_location(request, itinerary_id, location_id):
     Itinerary.objects.get(id=itinerary_id).locations.add(location_id)
+    return redirect('detail', itinerary_id=itinerary_id)
+
+def remove_location(request, itinerary_id, location_id):
+    Itinerary.objects.get(id=itinerary_id).locations.remove(location_id)
     return redirect('detail', itinerary_id=itinerary_id)
 
 class LocationList(ListView):

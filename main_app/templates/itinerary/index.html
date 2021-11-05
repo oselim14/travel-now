@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-content">
             {% if it.locations.all %}
-                <span class="card-title"> Starts with...</span>
+                <span class="card-title"> Starts with {{it.locations.all.first}}</span>
             {% else %}
                 <span class="card-title"> No location yet...</span>
             {% endif %}
