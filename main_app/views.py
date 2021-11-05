@@ -1,9 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -33,9 +31,9 @@ def itinerary_detail(request, itinerary_id):
         'locations': locations_exclude
     })
 
-def itinerary_create(request):
-    Itinerary.objects.create()
-    return redirect('index')
+class ItineraryCreate(CreateView):
+    model = Itinerary
+    fields = ['city', 'description', 'arrival_date', 'departure_date']
 
 class ItineraryUpdate(UpdateView):
     model = Itinerary
