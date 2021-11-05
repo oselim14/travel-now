@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from datetime import date
 from django.contrib.auth.models import User
-
+from django import forms
 # Create your models here.
 
 
@@ -10,8 +10,8 @@ from django.contrib.auth.models import User
 class Location(models.Model):
     name = models.CharField(max_length=250)
     website = models.CharField(max_length=250)
-    open_hours = models.DateTimeField('Opening Hour')
-    closing_hours = models.DateTimeField('Closing Hour')
+    open_hours = models.TimeField(auto_now=False, auto_now_add=False)
+    closing_hours = models.TimeField(auto_now=False, auto_now_add=False)
     address = models.CharField(max_length=250)
 
     def __str__(self):
