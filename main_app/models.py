@@ -24,8 +24,9 @@ class Location(models.Model):
 class Itinerary(models.Model):
     locations = models.ManyToManyField(Location)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+
     def __str__(self):
         return None
 
     def get_absolute_url(self):
-        return reverse('itinerary_detail', kwargs={'itinerary_id': self.id})
+        return reverse('detail', kwargs={'itinerary_id': self.id})

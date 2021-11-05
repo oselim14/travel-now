@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -10,7 +11,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Itinerary, Location
 from .forms import LocationForm
-from main_app import models
 
 # Create your views here.
 
@@ -21,23 +21,25 @@ def about(request):
     return render(request, 'about.html')
 
 def itinerary_index(request):
-    return render(request, 'itinerary/index.html', {'itinerary': itinerary })
+    itinerary = Itinerary.objects.filter(user=request.user)
+    return render(request, 'itinerary/index.html', { 'itinerary': itinerary })
 
-def itinerary_detail(request):
-    return render(request, 'itinerary/detail.html')
+def itinerary_detail(request, itinerary_id):
+    itinerary = Itinerary.objects.get(id=itinerary_id)
+    return render(request, 'itinerary/detail.html', { 'itinerary': itinerary })
 
-class ItineraryCreate(CreateView):
-    model = Itinerary
-    
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+def itinerary_create(request):
+    Itinerary.objects.create()
+    return redirect('index')
 
 def add_location(request, itinerary_id, location_id):
     Itinerary.objects.get(id=itinerary_id).locations.add(location_id)
     return redirect('detail', itinerary_id=itinerary_id)
 
 class LocationList(ListView):
+    model = Location
+
+class LocationDetail(DetailView):
     model = Location
 
 class LocationCreate(CreateView):
