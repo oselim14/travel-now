@@ -22,11 +22,15 @@ class Location(models.Model):
         
         
 class Itinerary(models.Model):
+    description = models.TextField(max_length=500, default='')
+    city = models.CharField(max_length=100, default='Seattle')
+    arrival_date = models.DateField('Arrival Date', default = date.today())
+    departure_date = models.DateField('Departure Date', default = date.today())
     locations = models.ManyToManyField(Location)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return None
+        return self.description
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'itinerary_id': self.id})
