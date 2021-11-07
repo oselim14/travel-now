@@ -12,3 +12,16 @@ body {
     padding-top: 0;
     text-align: right;
   }
+
+  .left {
+    font-family: Nunito;
+    font-style: bold !important;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 44px;
+    line-height: 190%;
+    align: left;
+    vertical-align: top;
+    /* need to figure out */
+    color: #0F214F !important;
+  }
