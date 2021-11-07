@@ -42,3 +42,14 @@ body {
     font-size: 18px;
     line-height: 1;
   }
+
+  .btn {
+    border-radius: 100em;
+    border: 0px;
+    padding: 7px 25px;
+  
+  }
+
+  .btn.btn-primary {
+    background-color: #f18911;
+  }
