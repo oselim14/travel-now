@@ -10,10 +10,10 @@ body {
     
   }
   
-  footer.page-footer {
-    padding-top: 100px;
-    margin-right: 50px;
+  footer {
+    padding-top: 20rem;
     text-align: right;
+    /* margin-left: 1490px; */
   }
 
   .left {
@@ -136,3 +136,9 @@ body {
     z-index: 100;
     animation: luggage .7s ease-in-out infinite;
   }
+
+  .header-logo {
+    margin-bottom: 10px;
+  }
+
+  
