@@ -100,8 +100,8 @@ class LocationList(ListView, LoginRequiredMixin):
 
 @login_required
 def my_locations(request):
-    location = Location.objects.filter(user=request.user)
-    return render(request, 'main_app/location_list.html', { 'location': location })
+    locations = Location.objects.filter(user=request.user)
+    return render(request, 'location/my_locations.html', { 'locations': locations })
 
 class LocationDetail(DetailView, LoginRequiredMixin):
     model = Location
