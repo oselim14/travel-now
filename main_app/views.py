@@ -7,8 +7,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Itinerary, Location
-from .forms import LocationForm
+from .models import Itinerary, Location, Comment
+from .forms import CommentForm
 
 # Create your views here.
 
@@ -25,10 +25,12 @@ def itinerary_index(request):
 def itinerary_detail(request, itinerary_id):
     itinerary = Itinerary.objects.get(id=itinerary_id)
     locations_exclude = Location.objects.exclude(id__in=itinerary.locations.all().values_list('id'))
+    comment_form = CommentForm()
 
     return render(request, 'itinerary/detail.html', {
         'itinerary': itinerary,
-        'locations': locations_exclude
+        'locations': locations_exclude,
+        'comment_form': comment_form
     })
 
 class ItineraryCreate(CreateView):
@@ -46,6 +48,22 @@ class ItineraryUpdate(UpdateView):
 class ItineraryDelete(DeleteView):
     model = Itinerary
     success_url = '/itinerary/'
+
+def add_comment(request, itinerary_id):
+  form = CommentForm(request.POST)
+
+  if form.is_valid():
+    new_comment = form.save(commit=False)
+    new_comment.user = request.user
+    new_comment.itinerary = Itinerary.objects.get(id=itinerary_id)
+    new_comment.save()
+  return redirect('detail', itinerary_id=itinerary_id)
+
+def remove_comment(request, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    itinerary_id = comment.itinerary.id
+    comment.delete()
+    return redirect('detail', itinerary_id=itinerary_id)
 
 def add_location(request, itinerary_id, location_id):
     Itinerary.objects.get(id=itinerary_id).locations.add(location_id)

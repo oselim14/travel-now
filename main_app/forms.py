@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from .models import Location
+from .models import Comment
 
-class LocationForm(ModelForm):
+class CommentForm(ModelForm):
     class Meta:
-        model = Location
-        fields = ['name', 'website', 'open_hours', 'closing_hours', 'address']
+        model = Comment
+        fields = ['content']
