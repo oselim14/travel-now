@@ -2,10 +2,12 @@ body {
     /* display: flex;
     min-height: 100vh;
     flex-direction: column; */
+    cursor: url('../img/coconut.png'), auto;
   }
   
   main {
     /* flex: 1 0 auto; */
+    
   }
   
   footer.page-footer {
@@ -23,11 +25,6 @@ body {
     line-height: 190%;
     vertical-align: top;
     color: #0F214F;
-  }
-
-  .landing-img {
-    width: 100%;
-    margin-top: 60px;
   }
 
   h1 {
@@ -64,4 +61,77 @@ body {
   .card {
     margin-right: 25px;
     border-radius: 1.25rem;
+  }
+
+  .landing {
+    background-image: url('../img/wave.png');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-bottom: 125px;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { 
+      background-position-y: 100%;
+      } 
+    50% {
+      background-position-y: 95%;
+    }
+    100% {
+      background-position-y: 100%;
+    }
+  }
+
+  @keyframes drive {
+    0% { 
+      transform: translatey(0px);
+    } 
+    50% {
+      transform: translatey(-4px);
+    }
+    100% {
+      transform: translatey(0px);
+    }
+  }
+
+  @keyframes luggage {
+    0% { 
+      transform: translatey(0px);
+    } 
+    40% {
+      transform: translatey(-8px);
+    }
+    100% {
+      transform: translatey(0px);
+    }
+  }
+
+  .islandbg {
+    background-image: url('../img/island.svg');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: flex;
+    flex-flow: column;
+    min-height: 500px;
+    text-align: center; 
+    align-items: center;
+    justify-content: end;
+    height: 600px;
+  }
+
+  .car {
+    width: 350px;
+    animation: drive .6s ease-in-out infinite;
+  }
+
+  .luggage {
+    width: 145px;
+    width: 145px;
+    margin-right: -120px;
+    margin-bottom: -9px;
+    z-index: 100;
+    animation: luggage .7s ease-in-out infinite;
   }
