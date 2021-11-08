@@ -27,6 +27,7 @@ def itinerary_index(request):
     itinerary = Itinerary.objects.all()
     return render(request, 'itinerary/index.html', { 'itinerary': itinerary })
 
+
 @login_required
 def my_itinerary(request):
     itinerary = Itinerary.objects.filter(user=request.user)
