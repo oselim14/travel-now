@@ -5,13 +5,14 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import uuid
 import boto3
 import os
 from .models import Itinerary, Location, Comment, Photo
 from .forms import CommentForm
+from .validations import itinerary_belongs_to_user, location_belongs_to_user
 
 # Create your views here.
 
@@ -21,10 +22,18 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def itinerary_index(request):
+    itinerary = Itinerary.objects.all()
+    return render(request, 'itinerary/index.html', { 'itinerary': itinerary })
+
+
+@login_required
+def my_itinerary(request):
     itinerary = Itinerary.objects.filter(user=request.user)
     return render(request, 'itinerary/index.html', { 'itinerary': itinerary })
 
+@login_required
 def itinerary_detail(request, itinerary_id):
     itinerary = Itinerary.objects.get(id=itinerary_id)
     locations_exclude = Location.objects.exclude(id__in=itinerary.locations.all().values_list('id'))
@@ -36,7 +45,7 @@ def itinerary_detail(request, itinerary_id):
         'comment_form': comment_form
     })
 
-class ItineraryCreate(CreateView):
+class ItineraryCreate(CreateView, LoginRequiredMixin):
     model = Itinerary
     fields = ['city', 'description', 'arrival_date', 'departure_date']
 
@@ -44,14 +53,21 @@ class ItineraryCreate(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class ItineraryUpdate(UpdateView):
+class ItineraryUpdate(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Itinerary
     fields = ['description', 'city', 'arrival_date', 'departure_date']
 
-class ItineraryDelete(DeleteView):
+    def test_func(self):
+        return itinerary_belongs_to_user(self.request.user, self.kwargs['pk'])
+
+class ItineraryDelete(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = Itinerary
     success_url = '/itinerary/'
 
+    def test_func(self):
+        return itinerary_belongs_to_user(self.request.user, self.kwargs['pk'])
+
+@login_required
 def add_comment(request, itinerary_id):
   form = CommentForm(request.POST)
 
@@ -62,38 +78,57 @@ def add_comment(request, itinerary_id):
     new_comment.save()
   return redirect('detail', itinerary_id=itinerary_id)
 
+@login_required
 def remove_comment(request, comment_id):
     comment = Comment.objects.get(id=comment_id)
     itinerary_id = comment.itinerary.id
     comment.delete()
     return redirect('detail', itinerary_id=itinerary_id)
 
+@login_required
 def add_location(request, itinerary_id, location_id):
     Itinerary.objects.get(id=itinerary_id).locations.add(location_id)
     return redirect('detail', itinerary_id=itinerary_id)
 
+@login_required
 def remove_location(request, itinerary_id, location_id):
     Itinerary.objects.get(id=itinerary_id).locations.remove(location_id)
     return redirect('detail', itinerary_id=itinerary_id)
 
-class LocationList(ListView):
+class LocationList(ListView, LoginRequiredMixin):
     model = Location
 
-class LocationDetail(DetailView):
+@login_required
+def my_locations(request):
+    location = Location.objects.filter(user=request.user)
+    return render(request, 'main_app/location_list.html', { 'location': location })
+
+class LocationDetail(DetailView, LoginRequiredMixin):
     model = Location
 
-class LocationCreate(CreateView):
+class LocationCreate(CreateView, LoginRequiredMixin):
+    model = Location
+    fields = ['name', 'website', 'open_hours', 'closing_hours', 'address']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class LocationUpdate(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Location
     fields = '__all__'
 
-class LocationUpdate(UpdateView):
-    model = Location
-    fields = '__all__'
+    def test_func(self):
+        return location_belongs_to_user(self.request.user, self.kwargs['pk'])
 
-class LocationDelete(DeleteView):
+class LocationDelete(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = Location
-    success_url = '/locations/'   
+    success_url = '/locations/' 
 
+    def test_func(self):
+        return location_belongs_to_user(self.request.user, self.kwargs['pk']) 
+
+@login_required
 def add_photo(request, itinerary_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -108,6 +143,7 @@ def add_photo(request, itinerary_id):
             print('An error occurred uploading file to s3')
     return redirect('detail', itinerary_id=itinerary_id)
 
+@login_required
 def photo_delete(request, photo_id):
     photo = Photo.objects.get(id = photo_id)
     itinerary_id = photo.itinerary.id

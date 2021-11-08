@@ -29,8 +29,10 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           {% if user.is_authenticated %}
+            <li><a class="nav-link px-2 link-dark" href="{% url 'my_locations' %}">View My Locations</a></li>
             <li><a class="nav-link px-2 link-dark" href="{% url 'locations_index' %}">View All Locations</a></li>
-            <li><a class="nav-link px-2 link-dark" href="{% url 'index' %}">View My Itinerary</a></li>
+            <li><a class="nav-link px-2 link-dark" href="{% url 'my_itinerary' %}">View My Itinerary</a></li>
+            <li><a class="nav-link px-2 link-dark" href="{% url 'index' %}">View All Itinerary</a></li>
             <li><a class="nav-link px-2 link-dark" href="{% url 'locations_create' %}">Add a Location</a></li>
             <li><a class="nav-link px-2 link-dark" href="{% url 'itinerary_create' %}">Add an Itinerary</a></li>
             <li><a class="nav-link px-2 link-dark" href="{% url 'logout' %}">Log Out</a></li>

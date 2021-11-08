@@ -13,6 +13,7 @@ class Location(models.Model):
     open_hours = models.TimeField(auto_now=False, auto_now_add=False)
     closing_hours = models.TimeField(auto_now=False, auto_now_add=False)
     address = models.CharField(max_length=250)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name
