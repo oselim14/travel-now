@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db import models
 from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
@@ -6,8 +7,10 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from .models import Itinerary, Location, Comment
+import uuid
+import boto3
+import os
+from .models import Itinerary, Location, Comment, Photo
 from .forms import CommentForm
 
 # Create your views here.
@@ -91,6 +94,26 @@ class LocationDelete(DeleteView):
     model = Location
     success_url = '/locations/'   
 
+def add_photo(request, itinerary_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            Photo.objects.create(url=url, itinerary_id = itinerary_id)
+        except:
+            print('An error occurred uploading file to s3')
+    return redirect('detail', itinerary_id=itinerary_id)
+
+def photo_delete(request, photo_id):
+    photo = Photo.objects.get(id = photo_id)
+    itinerary_id = photo.itinerary.id
+    photo.delete()
+    return redirect('detail', itinerary_id=itinerary_id)
+    
 
 def signup(request):
     error_message = ''
@@ -105,3 +128,4 @@ def signup(request):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+

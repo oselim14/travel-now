@@ -128,3 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/itinerary/'
 LOGOUT_REDIRECT_URL = '/'
+
+import environ
+environ.Env()
+environ.Env.read_env()
