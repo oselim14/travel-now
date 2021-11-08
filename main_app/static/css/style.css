@@ -55,3 +55,13 @@ body {
   .btn.btn-primary {
     background-color: #f18911;
   }
+
+  .card-img-top {
+    padding-top: 10px;
+    width: 100%;
+  }
+
+  .card {
+    margin-right: 25px;
+    border-radius: 1.25rem;
+  }
