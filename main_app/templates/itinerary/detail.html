@@ -69,6 +69,34 @@
 
 </div>
 
+<div class="col s6">
+  <form class='comment-form' action="{% url 'add_comment' itinerary.id %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <input type="submit" class="btn" value="Publish">
+  </form>
+  <br>
+  {% if not itinerary.comment_set.count %}
+    <div class="card-panel red-text center-align">No comments yet...</div>
+  {% else %}
+    <table class="striped">
+      <thead>
+        <tr><th>From</th><th>Date</th><th>Content</th></tr>
+      </thead>
+      <tbody>
+        {% for comment in itinerary.comment_set.all %}
+          <tr>
+            <td>{{comment.user}}</td>
+            <td>{{comment.date}}</td>
+            <td>{{comment.content}}</td>
+            <td><a href="{% url 'remove_comment' comment.id %}">Delete</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+
 <script>
 
   const dateEl = document.getElementById('id_date');

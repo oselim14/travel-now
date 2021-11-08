@@ -34,3 +34,15 @@ class Itinerary(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'itinerary_id': self.id})
+
+class Comment(models.Model):
+  date = models.DateField('Posted on', default=date.today())
+  content = models.TextField(max_length=500)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  itinerary = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
+
+  def __str__(self):
+    return f"{self.content} on {self.date}"
+
+  class Meta:
+    ordering = ['-date']
