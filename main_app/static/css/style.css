@@ -6,12 +6,12 @@ body {
   }
   
   main {
-    /* flex: 1 0 auto; */
+    height: 400px;
     
   }
   
   footer {
-    padding-top: 20rem;
+    padding-top: 18rem;
     text-align: right;
     /* margin-left: 1490px; */
   }
