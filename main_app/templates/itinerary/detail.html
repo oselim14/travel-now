@@ -84,6 +84,7 @@
   </div>
 
 </div>
+<div id="map"></div>
 
 <div class="col s6">
   <form class='comment-form' action="{% url 'add_comment' itinerary.id %}" method="POST">
@@ -113,18 +114,48 @@
   {% endif %}
 </div>
 
+<script src="https://maps.googleapis.com/maps/api/js?key={{ geo_key }}"></script>
+
 <script>
 
-  const dateEl = document.getElementById('id_date');
-  M.Datepicker.init(dateEl, {
-    format: 'yyyy-mm-dd',
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    autoClose: true
-  });
+  const GEO_KEY = '{{ geo_key }}';
+  const city = '{{ itinerary.city }}';
+  const geoUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${GEO_KEY}`;
 
-  const selectEl = document.getElementById('id_meal');
-  M.FormSelect.init(selectEl);
+  let lat, lng, map;
+
+  fetch(geoUrl).then(res => res.json())
+    .then(results => {
+      console.log(results)
+      lat = results.results[0].geometry.location.lat;
+      lng = results.results[0].geometry.location.lng;
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: {lat, lng},
+        zoom: 10,
+      });
+    }).then(() => {
+      const locations = [
+        {% for location in itinerary.locations.all %}
+          {address: "{{location.address}}", name: "{{location.name}}"},
+        {% endfor %}
+      ];
+      addMarkers(locations);
+    });
+  
+  
+  async function addMarkers(locations){
+    for (let location of locations){
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location.address}&key=${GEO_KEY}`;
+      const results = await fetch(geoUrl).then(res => res.json());
+      let lat = results.results[0].geometry.location.lat;
+      let lng = results.results[0].geometry.location.lng;
+      new google.maps.Marker({
+        position: {lat, lng},
+        map,
+        title: `${location.name}`,
+      });
+    }
+}
 
 </script>
 
