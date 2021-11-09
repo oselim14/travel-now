@@ -10,10 +10,12 @@
         <span class="card-title">{{ location.name }}</span>
         <p>Website: <a href={{ location.website }} target='_blank'>{{ location.website }}</a></p>
       </div>
-      <div class="card-action">
-        <a href="{% url 'locations_update' location.id %}">Edit</a>
-        <a href="{% url 'locations_delete' location.id %}">Delete</a>
-      </div>
+      {% if request.user.id == location.user.id %}
+        <div class="card-action">
+          <a href="{% url 'locations_update' location.id %}">Edit</a>
+          <a href="{% url 'locations_delete' location.id %}">Delete</a>
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>

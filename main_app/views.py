@@ -12,7 +12,8 @@ import boto3
 import os
 from .models import Itinerary, Location, Comment, Photo
 from .forms import CommentForm
-from .validations import itinerary_belongs_to_user, location_belongs_to_user
+from .validations import itinerary_belongs_to_user, location_belongs_to_user, comment_belongs_to_user, photo_belongs_to_user
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 
@@ -81,6 +82,8 @@ def add_comment(request, itinerary_id):
 
 @login_required
 def remove_comment(request, comment_id):
+    if not comment_belongs_to_user(request.user, comment_id):
+        raise PermissionDenied()
     comment = Comment.objects.get(id=comment_id)
     itinerary_id = comment.itinerary.id
     comment.delete()
@@ -139,13 +142,16 @@ def add_photo(request, itinerary_id):
             bucket = os.environ['S3_BUCKET']
             s3.upload_fileobj(photo_file, bucket, key)
             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-            Photo.objects.create(url=url, itinerary_id = itinerary_id)
+            itinerary = Itinerary.objects.get(id=itinerary_id)
+            Photo.objects.create(url=url, itinerary=itinerary)
         except:
             print('An error occurred uploading file to s3')
     return redirect('detail', itinerary_id=itinerary_id)
 
 @login_required
 def photo_delete(request, photo_id):
+    if not photo_belongs_to_user(request.user, photo_id):
+        raise PermissionDenied()
     photo = Photo.objects.get(id = photo_id)
     itinerary_id = photo.itinerary.id
     photo.delete()
