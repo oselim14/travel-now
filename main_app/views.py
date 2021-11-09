@@ -42,7 +42,8 @@ def itinerary_detail(request, itinerary_id):
     return render(request, 'itinerary/detail.html', {
         'itinerary': itinerary,
         'locations': locations_exclude,
-        'comment_form': comment_form
+        'comment_form': comment_form, 
+        'geo_key': os.environ['GEO_KEY']
     })
 
 class ItineraryCreate(CreateView, LoginRequiredMixin):
