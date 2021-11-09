@@ -10,26 +10,34 @@
         <h1 class='center'>{{ itinerary.city }}</h1>
         <h4 class='center'>{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
       </div>
-      <div class="card-action">
-        <a href="{% url 'itinerary_update' itinerary.id %}">Edit</a>
-        <a href="{% url 'itinerary_delete' itinerary.id %}">Delete</a>
-      </div>
+      {% if request.user.id == itinerary.user.id %}
+        <div class="card-action">
+          <a href="{% url 'itinerary_update' itinerary.id %}">Edit</a>
+          <a href="{% url 'itinerary_delete' itinerary.id %}">Delete</a>
+        </div>
+      {% endif %}
     </div>
+
     {% for photo in itinerary.photo_set.all %}
     <img class="responsive-img card-panel" src="{{photo.url}}">
-    <form action="{% url 'photo_delete' photo.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-    {% csrf_token %}
-    <input type="submit" class="btn" value="X">
-    </form>
-    {% empty %}
-    <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+      {% if request.user.id == itinerary.user.id %}
+        <form action="{% url 'photo_delete' photo.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+        {% csrf_token %}
+        <input type="submit" class="btn" value="X">
+        </form>
+        <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+      {% endif %}
     {% endfor %}
-    <form action="{% url 'add_photo' itinerary.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-    {% csrf_token %}
-    <input type="file" name="photo-file">
-    <br><br>
-    <input type="submit" class="btn" value="Upload Photo">
-    </form>
+
+    {% if request.user.id == itinerary.user.id %}
+      <form action="{% url 'add_photo' itinerary.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+      {% csrf_token %}
+      <input type="file" name="photo-file">
+      <br><br>
+      <input type="submit" class="btn" value="Upload Photo">
+      </form>
+    {% endif %}
+
   </div>
 </div>
 <hr>
@@ -45,12 +53,14 @@
               <p>website: {{location.website}}</p>
             </span>
           </div>
+          {% if request.user.id == itinerary.user.id %}
           <div class="card-action">
             <form action="{% url 'remove_location' itinerary.id location.id %}" method="post">
               {% csrf_token %}
               <button type="submit" class="btn">Remove</button>
             </form>
           </div>
+          {% endif %}
         </div>
       {% endfor %}
     {% else %}
@@ -58,8 +68,10 @@
     {% endif %}
   </div>
 
+  {% if request.user.id == itinerary.user.id %}
   <div class="col s6">
     <h3>Available Locations</h3>
+    
     {% if locations.count %}
       {% for location in locations.all %}
         <div class="card">
@@ -73,8 +85,7 @@
             <form action="{% url 'add_location' itinerary.id location.id %}" method="post">
               {% csrf_token %}
               <button type="submit" class="btn">Add</button>
-            </form>
-            
+            </form> 
           </div>
         </div>
       {% endfor %}
@@ -82,6 +93,7 @@
       <h5>Already Has All Locations Available</h5>
     {% endif %}
   </div>
+  {% endif %}
 
 </div>
 <div id="map"></div>
@@ -106,7 +118,9 @@
             <td>{{comment.user}}</td>
             <td>{{comment.date}}</td>
             <td>{{comment.content}}</td>
+            {% if request.user.id == comment.user.id %}
             <td><a href="{% url 'remove_comment' comment.id %}">Delete</a></td>
+            {% endif %}
           </tr>
         {% endfor %}
       </tbody>
