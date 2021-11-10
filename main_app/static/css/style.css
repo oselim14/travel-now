@@ -53,6 +53,13 @@ body {
     text-align: center;
   }
 
+  .custom-file-input {
+    border-radius: 100em;
+    border: 0px;
+    padding: 6px 25px;
+    margin-top: 20px;
+  }
+
   p {
     font-family: 'Nunito', sans-serif;
     font-size: 18px;
