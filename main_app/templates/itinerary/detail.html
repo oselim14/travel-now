@@ -5,7 +5,7 @@
 
 <div class="row">
   <div class="col s6">
-    <div class="card">
+    <div class="card text-center">
       <div class="card-content">
         <h1 class='center'>{{ itinerary.city }}</h1>
         <h4 class='center'>{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
@@ -23,21 +23,27 @@
       {% if request.user.id == itinerary.user.id %}
         <form action="{% url 'photo_delete' photo.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
         {% csrf_token %}
-        <input type="submit" class="btn" value="X">
+        <button type="submit" class="btn">X</button>  
         </form>
-        <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+      {% else %}
+        <div class="card-panel center-align">No Photos Uploaded</div>
       {% endif %}
     {% endfor %}
 
     {% if request.user.id == itinerary.user.id %}
-      <form action="{% url 'add_photo' itinerary.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-      {% csrf_token %}
-      <input type="file" name="photo-file">
+    <div class="input-group mb-3">
+      <div class="custom-file">
+        <form action="{% url 'add_photo' itinerary.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+        {% csrf_token %}
+        <input type="file" name="photo-file" class="custom-file-input">
+      </div>
       <br><br>
-      <input type="submit" class="btn" value="Upload Photo">
+      <div class="input-group-append">
+        <input type="submit" class="custom-file-input" value="Upload Photo">
+      </div>
       </form>
     {% endif %}
-
+    </div>
   </div>
 </div>
 <hr>
@@ -46,7 +52,7 @@
     <h3>Added Locations</h3>
     {% if itinerary.locations.count %}
       {% for location in itinerary.locations.all %}
-        <div class="card">
+        <div class="card text-center">
           <div class="card-content">
             <span class="card-title">
               <p>name: {{ location.name }}</p>
@@ -74,10 +80,10 @@
     
     {% if locations.count %}
       {% for location in locations.all %}
-        <div class="card">
+        <div class="card text-center">
           <div class="card-content">
             <span class="card-title">
-              <p>name: {{ location.name }}</p>
+              <p class="card-name">name: {{ location.name }}</p>
               <p>website: {{location.website}}</p>
             </span>
           </div>
@@ -99,11 +105,13 @@
 <div id="map"></div>
 
 <div class="col s6">
-  <form class='comment-form' action="{% url 'add_comment' itinerary.id %}" method="POST">
-    {% csrf_token %}
-    {{ comment_form.as_p }}
-    <input type="submit" class="btn" value="Publish">
-  </form>
+  <div class="row d-flex justify-content-center">
+    <form class="comment-form" action="{% url 'add_comment' itinerary.id %}" method="POST">
+      {% csrf_token %}
+      <span class="form-control me-2">{{ comment_form.as_p }}</span>
+      <input type="submit" class="btn" value="Publish">
+    </form>
+  </div>
   <br>
   {% if not itinerary.comment_set.count %}
     <div class="card-panel red-text center-align">No comments yet...</div>
@@ -146,6 +154,176 @@
       map = new google.maps.Map(document.getElementById("map"), {
         center: {lat, lng},
         zoom: 10,
+        styles: [
+    {
+        "featureType": "all",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "weight": "2.00"
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#9c9c9c"
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#f2f2f2"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 45
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#eeeeee"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#7b7b7b"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#46bcec"
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#c8d7d4"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#070707"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    }
+]
       });
     }).then(() => {
       const locations = [
