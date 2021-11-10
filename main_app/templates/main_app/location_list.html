@@ -9,7 +9,9 @@
   <a href="{% url 'locations_detail' location.id %}">
     <!-- <img class="card-img-top" src="{% static '/img/placeholder-img.jpeg' %}" alt="img"> -->
     <div class="card-body">
-      <span class="card-title">{{ location.name }}</span>
+      <h3 class="card-title">{{ location.name }}</h3>
+      <hr class="solid">
+      <span class="card-body text-center">{{ location.open_hours }} - {{ location.closing_hours }}</span>
     </div>
   </a>
 </div>
