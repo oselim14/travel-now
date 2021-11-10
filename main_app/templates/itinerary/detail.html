@@ -9,42 +9,45 @@
   <div class="col-md-12">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col p-4 d-flex flex-column position-static">
-        <h1 class="mb-0">{{ itinerary.city }}</h1>
-        <h4 class="mb-1">{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
+        <h4 class="mb-0">{{ itinerary.city }}</h4>
+        <h5 class="mb-1">{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h5>
         {% if request.user.id == itinerary.user.id %}
         <div class="card-action">
           <a href="{% url 'itinerary_update' itinerary.id %}">Edit</a>
           <a href="{% url 'itinerary_delete' itinerary.id %}">Delete</a>
         </div>
         {% endif %}
+
+
+        {% for photo in itinerary.photo_set.all %}
+        <img class="responsive-img card-panel"  src="{{photo.url}}">
+          {% if request.user.id == itinerary.user.id %}
+            <form action="{% url 'photo_delete' photo.id %}" enctype="multipart/form-data" method="POST" id="photo-form">
+            {% csrf_token %}
+            <button type="submit" class="btn" id="photo-button">X</button>  
+            </form>
+          {% else %}
+            <div class="card-panel center-align">No Photos Uploaded</div>
+          {% endif %}
+        {% endfor %}
+    
+        {% if request.user.id == itinerary.user.id %}
+        <div class="input-group mb-3">
+          <div class="custom-file">
+            <form action="{% url 'add_photo' itinerary.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+            {% csrf_token %}
+            <input type="file" name="photo-file" class="custom-file-input">
+            <input type="submit" class="custom-file-input" value="Upload Photo">
+          </div>
+          <!-- <div class="input-group-append">
+          </div> -->
+          </form>
+          {% endif %}
+        </div>
+      </div>
       </div>
     </div>
 
-    {% for photo in itinerary.photo_set.all %}
-    <img class="responsive-img card-panel"  src="{{photo.url}}">
-      {% if request.user.id == itinerary.user.id %}
-        <form action="{% url 'photo_delete' photo.id %}" enctype="multipart/form-data" method="POST" id="photo-form">
-        {% csrf_token %}
-        <button type="submit" class="btn" id="photo-button">X</button>  
-        </form>
-      {% else %}
-        <div class="card-panel center-align">No Photos Uploaded</div>
-      {% endif %}
-    {% endfor %}
-
-    {% if request.user.id == itinerary.user.id %}
-    <div class="input-group mb-3">
-      <div class="custom-file">
-        <form action="{% url 'add_photo' itinerary.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-        {% csrf_token %}
-        <input type="file" name="photo-file" class="custom-file-input">
-      </div>
-      <div class="input-group-append">
-        <input type="submit" class="custom-file-input" value="Upload Photo">
-      </div>
-      </form>
-    {% endif %}
-    </div>
   </div>
 </div>
 <hr>
