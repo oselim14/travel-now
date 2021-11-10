@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-content">
             {% if itinerary.all %}
-                <span class="card-title"> My Trip To {{it.city}}</span>
+                <span class="card-title"> {{ user }}'s Trip To {{it.city}}</span>
             {% else %}
                 <span class="card-title"> No trips yet...</span>
             {% endif %}
