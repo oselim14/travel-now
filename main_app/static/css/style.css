@@ -179,10 +179,12 @@ body {
   }
 
   .mb-3 {
+    display: flex;
     justify-content: center;
     margin: 10px;
     padding-top: 10px;
-
+    flex-direction: column;
+    align-items: center;
   }
 
   .responsive-img {
@@ -193,4 +195,14 @@ body {
 
   .comment-form {
     justify-content: center !important;
+  }
+
+  #photo-button {
+    margin: auto;
+  
+  }
+
+  #photo-form{
+    display: flex;
+    justify-content: center;
   }
