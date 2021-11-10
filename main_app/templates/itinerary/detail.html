@@ -6,11 +6,11 @@
 <h1>Itinerary Details</h1>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col p-4 d-flex flex-column position-static">
         <h1 class="mb-0">{{ itinerary.city }}</h1>
-        <div class="mb-1 >{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
+        <h4 class="mb-1">{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
       </div>
       {% if request.user.id == itinerary.user.id %}
         <div class="card-action">
