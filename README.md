@@ -31,4 +31,4 @@ The purpose of this website is to store information about the user's current iti
 
 
 ## Credits:
-- [Google Maps Api](https://developers.google.com/maps)
+- [Google Maps API](https://developers.google.com/maps)
