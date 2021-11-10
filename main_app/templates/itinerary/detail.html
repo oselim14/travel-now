@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
 
 <h1>Itinerary Details</h1>
 
 <div class="row">
-  <div class="col s6">
-    <div class="card text-center">
-      <div class="card-content">
-        <h1 class='center'>{{ itinerary.city }}</h1>
-        <h4 class='center'>{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
+  <div class="col-md-6">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <h1 class="mb-0">{{ itinerary.city }}</h1>
+        <div class="mb-1 >{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
       </div>
       {% if request.user.id == itinerary.user.id %}
         <div class="card-action">
@@ -19,11 +21,11 @@
     </div>
 
     {% for photo in itinerary.photo_set.all %}
-    <img class="responsive-img card-panel" src="{{photo.url}}">
+    <img class="responsive-img card-panel"  src="{{photo.url}}">
       {% if request.user.id == itinerary.user.id %}
-        <form action="{% url 'photo_delete' photo.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+        <form action="{% url 'photo_delete' photo.id %}" enctype="multipart/form-data" method="POST" id="photo-form">
         {% csrf_token %}
-        <button type="submit" class="btn">X</button>  
+        <button type="submit" class="btn" id="photo-button">X</button>  
         </form>
       {% else %}
         <div class="card-panel center-align">No Photos Uploaded</div>
@@ -37,7 +39,6 @@
         {% csrf_token %}
         <input type="file" name="photo-file" class="custom-file-input">
       </div>
-      <br><br>
       <div class="input-group-append">
         <input type="submit" class="custom-file-input" value="Upload Photo">
       </div>

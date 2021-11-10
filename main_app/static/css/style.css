@@ -44,7 +44,7 @@ body {
   .btn {
     border-radius: 100em;
     border: 0px;
-    padding: 7px 25px;
+    padding: 6px 25px;
     margin-top: 20px;
   }
 
@@ -58,7 +58,6 @@ body {
   }
 
   .card {
-    margin-right: 25px;
     border-radius: 1.25rem;
   }
 
@@ -149,7 +148,7 @@ body {
 
   div.card{
     background-color: #fabe82e0 !important;
-    border: 3px solid #0F214F !important;
+    border: 0px solid #0F214F !important;
     align-items: center;
     justify-content: center;
     margin: 10px;
@@ -171,7 +170,7 @@ body {
   }
 
   .card-content {
-    margin-bottom: 15px;
+    margin-bottom: -9px;
   }
 
   #photo-add{
@@ -179,10 +178,12 @@ body {
   }
 
   .mb-3 {
+    display: flex;
     justify-content: center;
     margin: 10px;
     padding-top: 10px;
-
+    flex-direction: column;
+    align-items: center;
   }
 
   .responsive-img {
@@ -193,4 +194,14 @@ body {
 
   .comment-form {
     justify-content: center !important;
+  }
+
+  #photo-button {
+    margin: auto;
+  
+  }
+
+  #photo-form{
+    display: flex;
+    justify-content: center;
   }
