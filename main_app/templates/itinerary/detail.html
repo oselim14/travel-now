@@ -11,13 +11,13 @@
       <div class="col p-4 d-flex flex-column position-static">
         <h1 class="mb-0">{{ itinerary.city }}</h1>
         <h4 class="mb-1">{{ itinerary.arrival_date }} - {{ itinerary.departure_date }}</h4>
-      </div>
-      {% if request.user.id == itinerary.user.id %}
+        {% if request.user.id == itinerary.user.id %}
         <div class="card-action">
           <a href="{% url 'itinerary_update' itinerary.id %}">Edit</a>
           <a href="{% url 'itinerary_delete' itinerary.id %}">Delete</a>
         </div>
-      {% endif %}
+        {% endif %}
+      </div>
     </div>
 
     {% for photo in itinerary.photo_set.all %}
