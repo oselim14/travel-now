@@ -47,7 +47,7 @@
 <hr>
 <div class="row">
   <div class="col s6">
-    <h3>Added Locations</h3>
+    <h3>Locations</h3>
     {% if itinerary.locations.count %}
       {% for location in itinerary.locations.all %}
         <div class="card text-center">
@@ -58,7 +58,7 @@
             </span>
           </div>
           {% if request.user.id == itinerary.user.id %}
-          <div class="card-action">
+          <div class="card-action" id="card-action">
             <form action="{% url 'remove_location' itinerary.id location.id %}" method="post">
               {% csrf_token %}
               <button type="submit" class="btn">Remove</button>

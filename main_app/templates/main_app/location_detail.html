@@ -15,7 +15,7 @@
           <p><b>Address:</b> <br> {{ location.address }} </p>
       </div>
       {% if request.user.id == location.user.id %}
-        <div class="card-action">
+        <div class="card-action" id="card-action">
           <a href="{% url 'locations_update' location.id %}">Edit</a>
           <a href="{% url 'locations_delete' location.id %}">Delete</a>
         </div>
