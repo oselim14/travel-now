@@ -9,6 +9,10 @@
       <div class="card-content">
         <span class="card-title">{{ location.name }}</span>
         <p>Website: <a href={{ location.website }} target='_blank'>{{ location.website }}</a></p>
+        <hr>
+          <p><b>Website:</b> <a href={{ location.website }} target='_blank'>{{ location.website }}</a></p>
+          <p><b>Hours:</b> {{ location.open_hours }} - {{ location.closing_hours }}</p>
+          <p><b>Address:</b> <br> {{ location.address }} </p>
       </div>
       {% if request.user.id == location.user.id %}
         <div class="card-action">
