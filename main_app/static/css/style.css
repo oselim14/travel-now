@@ -51,6 +51,8 @@ body {
 
   .card-action {
     text-align: center;
+    margin-top: 16px;
+    color: #0F214F;
   }
 
   .custom-file-input {
@@ -94,6 +96,19 @@ body {
     padding-bottom: 125px;
     animation: float 6s ease-in-out infinite;
   }
+
+  .col {
+    background-image: url('../img/background2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+  }
+
+  .img.responsive-img, {
+    max-width: 50%;
+  }
+
 
   @keyframes float {
     0% { 
