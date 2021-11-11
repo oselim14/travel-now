@@ -7,7 +7,6 @@
 {% for location in location_list %}
 <div class="card" style="width: 18rem;">
   <a href="{% url 'locations_detail' location.id %}">
-    <!-- <img class="card-img-top" src="{% static '/img/placeholder-img.jpeg' %}" alt="img"> -->
     <div class="card-body">
       <h3 class="card-title">{{ location.name }}</h3>
       <hr class="solid">
@@ -15,7 +14,6 @@
     </div>
   </a>
 </div>
-
 {% endfor %}
 
 {% endblock %}
