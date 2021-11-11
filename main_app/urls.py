@@ -15,6 +15,7 @@ urlpatterns = [
     path('remove_comment/<int:comment_id>/', views.remove_comment, name='remove_comment'),
     path('itinerary/<int:itinerary_id>/add_location/<int:location_id>', views.add_location, name='add_location'),
     path('itinerary/<int:itinerary_id>/remove_location/<int:location_id>', views.remove_location, name='remove_location'),
+    path('itinerary/<int:pk>/update_locations/', views.UpdateLocations.as_view(), name='update_locations'),
     path('locations/', views.LocationList.as_view(), name='locations_index'),
     path('locations/me/', views.my_locations, name='my_locations'),
     path('locations/create/', views.LocationCreate.as_view(), name='locations_create'),

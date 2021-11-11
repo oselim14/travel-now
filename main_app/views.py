@@ -11,7 +11,7 @@ import uuid
 import boto3
 import os
 from .models import Itinerary, Location, Comment, Photo
-from .forms import CommentForm
+from .forms import CommentForm, LocationsForm
 from .validations import itinerary_belongs_to_user, location_belongs_to_user, comment_belongs_to_user, photo_belongs_to_user
 from django.core.exceptions import PermissionDenied
 
@@ -39,11 +39,13 @@ def itinerary_detail(request, itinerary_id):
     itinerary = Itinerary.objects.get(id=itinerary_id)
     locations_exclude = Location.objects.exclude(id__in=itinerary.locations.all().values_list('id'))
     comment_form = CommentForm()
+    locations_form = LocationsForm()
 
     return render(request, 'itinerary/detail.html', {
         'itinerary': itinerary,
         'locations': locations_exclude,
         'comment_form': comment_form, 
+        'locations_form': locations_form, 
         'geo_key': os.environ['GEO_KEY']
     })
 
@@ -98,6 +100,10 @@ def add_location(request, itinerary_id, location_id):
 def remove_location(request, itinerary_id, location_id):
     Itinerary.objects.get(id=itinerary_id).locations.remove(location_id)
     return redirect('detail', itinerary_id=itinerary_id)
+
+class UpdateLocations(UpdateView):
+    model = Itinerary
+    fields = ['locations']
 
 class LocationList(ListView, LoginRequiredMixin):
     model = Location
