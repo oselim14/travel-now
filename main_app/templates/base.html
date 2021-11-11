@@ -26,7 +26,7 @@
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
             <img class="header-logo" src="{% static '/img/TravelNowLogo.svg' %}" alt="">
-          </a>
+        </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           {% if user.is_authenticated %}
@@ -37,7 +37,7 @@
             <li><a class="nav-link px-2 link-dark" href="{% url 'locations_create' %}">Add a Location</a></li>
             <li><a class="nav-link px-2 link-dark" href="{% url 'itinerary_create' %}">Add an Itinerary</a></li>
             <li><a class="nav-link px-2 link-dark" href="{% url 'logout' %}">Log Out</a></li>
-            {% else %}
+          {% else %}
             <li><a class="nav-link px-2 link-dark" href="{% url 'login' %}">Log In</a></li>
             <li><a class="nav-link px-2 link-dark" href="{% url 'signup' %}">Sign Up Here!</a></li>
           {% endif %}
