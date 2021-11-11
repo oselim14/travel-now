@@ -93,13 +93,27 @@ p {
   animation: float 6s ease-in-out infinite;
 }
 
-.col {
+.coll {
   background-image: url('../img/background2.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
 }
+
+.card-action {
+  margin-bottom: 10;
+  border-radius: 10;
+  color: black;
+}
+a > card-action {
+color: grey;
+}
+
+td {
+  display: flex;
+  justify-content: center;
+  }
 
 .img.responsive-img {
   max-width: 50%;
