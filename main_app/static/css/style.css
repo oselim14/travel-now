@@ -196,11 +196,11 @@ td {
 }
 
 div.card {
-  background-color: #fabe82e0 !important;
-  border: 0px solid #0F214F !important;
+  background-color: #f0af6fe0 !important;
   align-items: center;
   justify-content: center;
   margin: 10px;
+  width: fit-content;
 }
 
 a {
