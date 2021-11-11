@@ -3,9 +3,6 @@ from django.urls import reverse
 from datetime import date
 from django.contrib.auth.models import User
 from django import forms
-# Create your models here.
-
-
 
 class Location(models.Model):
     name = models.CharField(max_length=250)
@@ -20,7 +17,6 @@ class Location(models.Model):
 
     def get_absolute_url(self):
         return reverse('locations_index')
-        
         
 class Itinerary(models.Model):
     description = models.TextField(max_length=500, default='')
@@ -47,7 +43,6 @@ class Comment(models.Model):
 
   class Meta:
     ordering = ['-date']
-
 
 class Photo(models.Model):
   url = models.CharField(max_length=250)

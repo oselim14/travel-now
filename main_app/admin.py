@@ -1,8 +1,6 @@
 from django.contrib import admin
 from django.db import models
 
-
-# Register your models here.
 from .models import Itinerary, Location, Comment, Photo
 
 admin.site.register(Itinerary)

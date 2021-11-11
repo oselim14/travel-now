@@ -15,7 +15,6 @@ from .forms import CommentForm, LocationsForm
 from .validations import itinerary_belongs_to_user, location_belongs_to_user, comment_belongs_to_user, photo_belongs_to_user
 from django.core.exceptions import PermissionDenied
 
-# Create your views here.
 
 def home(request):
     return render(request, 'home.html')
@@ -27,7 +26,6 @@ def about(request):
 def itinerary_index(request):
     itinerary = Itinerary.objects.all()
     return render(request, 'itinerary/index.html', { 'itinerary': itinerary })
-
 
 @login_required
 def my_itinerary(request):
@@ -161,8 +159,7 @@ def photo_delete(request, photo_id):
     photo = Photo.objects.get(id = photo_id)
     itinerary_id = photo.itinerary.id
     photo.delete()
-    return redirect('detail', itinerary_id=itinerary_id)
-    
+    return redirect('detail', itinerary_id=itinerary_id)   
 
 def signup(request):
     error_message = ''
