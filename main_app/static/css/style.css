@@ -185,7 +185,9 @@ div.card {
   background-color: #f0af6fe0 !important;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  /* margin: 10px; */
+  margin-right: auto;
+  margin-left: auto;
   width: fit-content;
 }
 
