@@ -101,20 +101,6 @@ p {
   text-align: center;
 }
 
-.card-action {
-  margin-bottom: 10;
-  border-radius: 10;
-  color: black;
-}
-a > card-action {
-color: grey;
-}
-
-td {
-  display: flex;
-  justify-content: center;
-  }
-
 .img.responsive-img {
   max-width: 50%;
 }
@@ -252,4 +238,17 @@ h3 {
 #photo-form {
   display: flex;
   justify-content: center;
+}
+
+#card-action {
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+#card-action > a {
+  color: grey;
+}
+
+.card-panel {
+  border-radius: 10px;
 }
