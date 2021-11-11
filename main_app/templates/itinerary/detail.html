@@ -39,8 +39,6 @@
             <input type="file" name="photo-file" class="custom-file-input">
             <input type="submit" class="custom-file-input" value="Upload Photo">
           </div>
-          <!-- <div class="input-group-append">
-          </div> -->
           </form>
           {% endif %}
         </div>
@@ -79,31 +77,14 @@
   </div>
 
   {% if request.user.id == itinerary.user.id %}
-  <div class="col s6">
-    <h3>Available Locations</h3>
-    
-    {% if locations.count %}
-      {% for location in locations.all %}
-        <div class="card text-center">
-          <div class="card-content">
-            <span class="card-title">
-              <p class="card-name">name: {{ location.name }}</p>
-              <p>website: {{location.website}}</p>
-            </span>
-          </div>
-          <div class="card-action">
-            <form action="{% url 'add_location' itinerary.id location.id %}" method="post">
-              {% csrf_token %}
-              <button type="submit" class="btn">Add</button>
-            </form> 
-          </div>
-        </div>
-      {% endfor %}
-    {% else %}
-      <h5>Already Has All Locations Available</h5>
-    {% endif %}
-  </div>
+    <form method="POST" id="locationform" action="{% url 'update_locations' itinerary.id %}"> 
+      {% csrf_token %}
+          {{ locations_form.as_p }}
+          <button type="submit" class="btn">Add</button>
+        </form>  
+  
   {% endif %}
+
 
 </div>
 <div id="map"></div>
@@ -352,6 +333,22 @@
       });
     }
 }
+  const formEl = document.getElementById('id_locations')
+  const locations = [
+        {% for location in itinerary.locations.all %}
+        '{{ location.id }}', 
+        {% endfor %} 
+    ];
+
+    locations.forEach(function(m) {
+        const selectEl = document.getElementById('id_locations');
+        let idx = 0;
+        for (let option of selectEl.options) {
+            if (locations.includes(option.value)) selectEl.options[idx].selected = true;
+            idx++;
+        }
+    });
+  M.FormSelect.init(formEl);
 
 </script>
 
