@@ -6,12 +6,11 @@
 <div class="row">
   <div class="col s6 col-offset-3">
     <div class="card">
-      <div class="card-content">
+      <div class="card-content" id="location-dets">
         <span class="card-title">{{ location.name }}</span>
-        <p>Website: <a href={{ location.website }} target='_blank'>{{ location.website }}</a></p>
         <hr>
-          <p><b>Website:</b> <a href={{ location.website }} target='_blank'>{{ location.website }}</a></p>
-          <p><b>Hours:</b> {{ location.open_hours }} - {{ location.closing_hours }}</p>
+          <p><b>Website:</b> <a href={{ location.website }} target='_blank'>{{ location.website }}</a></p><br>
+          <p><b>Hours:</b> {{ location.open_hours }} - {{ location.closing_hours }}</p><br>
           <p><b>Address:</b> <br> {{ location.address }} </p>
       </div>
       {% if request.user.id == location.user.id %}

@@ -276,3 +276,9 @@ h3 {
 .card-body {
   text-align: center;
 }
+
+#location-dets {
+  align-items: center;
+  flex-direction: column;
+  line-height: 30px;
+}
