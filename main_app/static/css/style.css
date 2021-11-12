@@ -1,14 +1,22 @@
 body {
     cursor: url('../img/coconut.png'), auto;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
   }
   
 main {
-  height: 400px;
+  height: 100%;
+  flex-grow: 1;
+  justify-self: flex-end;
 }
 
 footer {
+  margin-bottom: 5em;
   padding-top: 10rem;
   text-align: right;
+  text-align: center;
 }
 
 .left {
