@@ -290,3 +290,39 @@ h3 {
   flex-direction: column;
   line-height: 30px;
 }
+
+.comments {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment {
+  background: url(../img/background2.png);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, .5);
+  padding: 3em;
+  margin: 2em;
+  border-radius: 10px;
+}
+
+.content {
+  margin-left: 1em
+}
+
+.date {
+  font-size: .8em;
+  margin-bottom: 2em
+}
+
+.delete-btn {
+  padding: 1em 2em;
+  border-radius: 5px;
+  background: #000;
+  border: 1px solid #000;
+  color: #fff;
+  margin: 0
+}
+
+.delete-btn:hover {
+  background: #fff;
+  color: #000
+}
