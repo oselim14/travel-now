@@ -54,7 +54,6 @@ h5 {
 .custom-file-input {
   border-radius: 100em;
   border: 0px;
-  /* background-color: none; */
   padding: 6px 25px;
   margin: -54px;
 }
@@ -192,10 +191,10 @@ div.card {
   background-color: bisque;
   align-items: center;
   justify-content: center;
-  /* margin: 10px; */
   margin-right: auto;
   margin-left: auto;
   width: fit-content;
+  min-width: 80vmin;
 }
 
 a {
@@ -216,6 +215,10 @@ h3 {
 .card-content {
   margin-bottom: -9px;
   background-image: url(../img/background2.png) !important;
+  width: fit-content;
+  min-width: 80vmin;
+  display: flex;
+  justify-content: center;
 }
 
 #photo-add{
@@ -268,4 +271,8 @@ h3 {
 .loc-card {
   background-image: url(../img/background2.png);
   background-size: cover;
+}
+
+.card-body {
+  text-align: center;
 }
