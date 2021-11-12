@@ -4,6 +4,10 @@
 TravelNow is a social media planning website. The purpose of the website is to build a list of places you would like to see when you visit a city. After adding them to your itinerary for the city, they will all be represented on a map. This is so you can see what locations are near eachother and more efficiently plan your trip. If you share your itinerary with a friend, they are able to leave comments about what else you could do while in that city. The itinerary can be updated, changed and deleted as plans change when you are travelling. 
 
 ![Landing Page](https://i.imgur.com/t7aBjQt.png)
+![Location Form](https://i.imgur.com/MZJKsDF.png)
+![Location List](https://i.imgur.com/CD9AVnr.png)
+![Itinerary Details](https://i.imgur.com/VI6pHSI.png)
+![Itinerary Page](https://i.imgur.com/mmZlthk.png)
 
 ## Technologies Used
 * HTML
