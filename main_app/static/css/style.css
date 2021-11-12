@@ -54,8 +54,9 @@ h5 {
 .custom-file-input {
   border-radius: 100em;
   border: 0px;
+  /* background-color: none; */
   padding: 6px 25px;
-  margin-top: 20px;
+  margin: -54px;
 }
 
 p {
@@ -73,6 +74,12 @@ p {
 
 .btn.btn-primary {
   background-color: #f18911;
+}
+
+.btn.btn-secondary {
+  background-color: #f18911;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card-img-top {
@@ -182,7 +189,7 @@ p {
 }
 
 div.card {
-  background-color: #f0af6fe0 !important;
+  background-color: bisque;
   align-items: center;
   justify-content: center;
   /* margin: 10px; */
@@ -208,6 +215,7 @@ h3 {
 
 .card-content {
   margin-bottom: -9px;
+  background-image: url(../img/background2.png) !important;
 }
 
 #photo-add{
@@ -252,5 +260,12 @@ h3 {
 }
 
 .card-panel {
-  border-radius: 10px;
+  /* border-radius: 10px; */
+  background: none;
+  box-shadow: none;
+}
+
+.loc-card {
+  background-image: url(../img/background2.png);
+  background-size: cover;
 }
